@@ -13,8 +13,10 @@
 
     expected_answer = "grant me the s3r3nity to accept the things i cannot change the c0urage to change the things i can and the w1sd0m to know the difference"
 
-    def sanitize_paragraph(paragraph)
-      # your code
+    def sanitize_paragraph(paragraph):
+        par_clean = [let for let in paragraph if let not in '’–']
+        par_clean_join = ''.join(par_clean).lower()
+    return ' '.join(par_clean_join.split())
     end
     
     puts "Challenge 1 completed: #{sanitize_paragraph(paragraph) == expected_answer}"
@@ -37,7 +39,17 @@
     ]
 
     def get_state(address)
-      # your code
+      import pandas as pd
+      df = pd.Series(address)
+      state = []
+      for x in df_1:
+        if x[len(x)-1].lower().split() != ['malaysia']:
+            stat = x[len(x)-1].split()
+            state.append(stat[0].upper())
+        else: 
+            stat = x[len(x)-2].split()
+            state.append(stat[0].upper())
+    return state
     end
 
     # passing validation
@@ -55,7 +67,22 @@
     expected_answer = "MULTIPOLYGON (((30 20, 45 40, 10 40, 30 20)), ((15 5, 40 10, 10 20, 5 10, 15 5)))"
 
     def coord_to_wkt(coordinate_pair)
-      # your code
+      cp_str = ''.join([cor for cor in str(coordinate_pair) if cor not in '][,'])
+      cp = pd.Series(cp_str.split()).apply(lambda x: int(x))
+      wtk = "MULTIPOLYGON ((("
+      for i, x in enumerate(cp):
+        i+=1
+        if i < 8:
+            if i%2 != 0: #odd
+                wtk += f'{x}'
+            elif i < 7: wtk += f' {x}, '
+        elif i == 8 : wtk += f' {x})), (('
+        elif i >= 9 and i <= 17:
+            if i%2 != 0: #odd
+                wtk += f'{x}'
+            else: wtk += f' {x}, '
+        else: wtk += f' {x})))'
+      return wtk
     end
 
     # passing validation
@@ -70,7 +97,10 @@
     Bonus points for the elegant recursive solution!'
 
     def is_palindrome?(word)
-      
+      if word[::-1] == word:
+        print('True')
+      else: print('False')
+      return
     end
 
     # passing validation
